@@ -3,6 +3,13 @@ import { AddReportButton } from "@/components/AddReportButton";
 import { StatusTimeline } from "@/components/StatusTimeline";
 import { useToast } from "@/components/ui/use-toast";
 
+type Status = {
+  date: string;
+  status: "Green" | "Amber" | "Red";
+  reporter: string;
+  comment: string;
+};
+
 const mockStatuses = [
   {
     date: "2025-01-27",
@@ -28,11 +35,11 @@ const mockStatuses = [
     reporter: "Abdullahi Abdi",
     comment: "Yokai team is undergoing restructuring as well as exploration, team members being reassigned to other project as the project is being reevaluated throughout January",
   },
-] as const;
+] as Status[];
 
 const Index = () => {
   const { toast } = useToast();
-  const [statuses] = useState(mockStatuses);
+  const [statuses, setStatuses] = useState<Status[]>(mockStatuses);
 
   const handleAddReport = () => {
     toast({

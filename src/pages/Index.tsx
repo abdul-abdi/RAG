@@ -2,6 +2,8 @@ import { useState } from "react";
 import { AddReportButton } from "@/components/AddReportButton";
 import { StatusTimeline } from "@/components/StatusTimeline";
 import { useToast } from "@/components/ui/use-toast";
+import { MetricsOverview } from "@/components/MetricsOverview";
+import { AddReportForm } from "@/components/AddReportForm";
 
 type Status = {
   date: string;
@@ -40,11 +42,20 @@ const mockStatuses = [
 const Index = () => {
   const { toast } = useToast();
   const [statuses, setStatuses] = useState<Status[]>(mockStatuses);
+  const [isAddingReport, setIsAddingReport] = useState(false);
 
-  const handleAddReport = () => {
+  const handleAddReport = ({ status, comment }: { status: "Green" | "Amber" | "Red"; comment: string }) => {
+    const newStatus: Status = {
+      date: new Date().toISOString(),
+      status,
+      reporter: "Abdullahi Abdi", // In a real app, this would come from the logged-in user
+      comment,
+    };
+
+    setStatuses([newStatus, ...statuses]);
     toast({
-      title: "Coming Soon",
-      description: "The ability to add new reports will be available soon.",
+      title: "Report Added",
+      description: "Your status report has been successfully added.",
     });
   };
 
@@ -52,14 +63,28 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="container py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Project Status Dashboard</h1>
+            <p className="mt-2 text-gray-600">Track and monitor project health over time</p>
+          </div>
+          
+          <MetricsOverview />
+          
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Status Summary</h1>
-              <p className="mt-2 text-gray-600">Track project status and progress over time</p>
+              <h2 className="text-xl font-semibold text-gray-900">Status History</h2>
+              <p className="mt-1 text-sm text-gray-600">View and manage status reports</p>
             </div>
-            <AddReportButton onClick={handleAddReport} />
+            <AddReportButton onClick={() => setIsAddingReport(true)} />
           </div>
+          
           <StatusTimeline statuses={statuses} />
+          
+          <AddReportForm
+            open={isAddingReport}
+            onOpenChange={setIsAddingReport}
+            onSubmit={handleAddReport}
+          />
         </div>
       </div>
     </div>

@@ -70,27 +70,15 @@ const Index = () => {
           
           <MetricsOverview />
           
-          <div className="grid grid-cols-1 xl:grid-cols-[2fr,1fr] gap-8">
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900">Status History</h2>
-                  <p className="mt-1 text-sm text-gray-600">View and manage status reports</p>
-                </div>
-                <AddReportButton onClick={() => setIsAddingReport(true)} />
-              </div>
-              <StatusTimeline statuses={statuses} />
-            </div>
-            
-            <div className="space-y-6">
+          <div>
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">Project Details</h2>
-                <p className="mt-1 text-sm text-gray-600">Additional project information</p>
+                <h2 className="text-xl font-semibold text-gray-900">Status History</h2>
+                <p className="mt-1 text-sm text-gray-600">View and manage status reports</p>
               </div>
-              <div className="bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-gray-100">
-                <p className="text-sm text-gray-500">This section can be used for project details, team members, or other relevant information.</p>
-              </div>
+              <AddReportButton onClick={() => setIsAddingReport(true)} />
             </div>
+            <StatusTimeline statuses={statuses} />
           </div>
           
           <AddReportForm

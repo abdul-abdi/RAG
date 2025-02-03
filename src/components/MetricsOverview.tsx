@@ -1,14 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingDown, TrendingUp, Minus, Clock, History, AlertCircle, Users, Target } from "lucide-react";
+import { TrendingDown, TrendingUp, Minus, AlertCircle, Circle } from "lucide-react";
 
 interface MetricCardProps {
   title: string;
   value: string;
   trend: "up" | "down" | "neutral";
   icon?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const MetricCard = ({ title, value, trend, icon }: MetricCardProps) => {
+const MetricCard = ({ title, value, trend, icon, children }: MetricCardProps) => {
   const getTrendIcon = () => {
     switch (trend) {
       case "up":
@@ -30,6 +31,7 @@ const MetricCard = ({ title, value, trend, icon }: MetricCardProps) => {
               <p className="text-sm font-medium text-muted-foreground">{title}</p>
             </div>
             <h3 className="text-2xl font-bold">{value}</h3>
+            {children}
           </div>
           {getTrendIcon()}
         </div>
@@ -38,45 +40,42 @@ const MetricCard = ({ title, value, trend, icon }: MetricCardProps) => {
   );
 };
 
+const RagColorHistory = () => {
+  const colors = [
+    { color: "bg-rag-green", title: "Current" },
+    { color: "bg-rag-amber", title: "Previous" },
+    { color: "bg-rag-red", title: "Last Week" },
+  ];
+
+  return (
+    <div className="flex gap-3 mt-2">
+      {colors.map((item, index) => (
+        <div key={index} className="flex flex-col items-center gap-1">
+          <div className={`w-4 h-4 rounded-full ${item.color}`} />
+          <span className="text-xs text-muted-foreground">{item.title}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const MetricsOverview = () => {
   return (
-    <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
       <MetricCard
-        title="Current Status"
-        value="Green"
-        trend="up"
+        title="RAG Status Required"
+        value="No"
+        trend="neutral"
         icon={<AlertCircle className="h-4 w-4 text-muted-foreground" />}
       />
       <MetricCard
-        title="Last Week"
-        value="Green"
-        trend="neutral"
-        icon={<History className="h-4 w-4 text-muted-foreground" />}
-      />
-      <MetricCard
-        title="Days Since Last Red"
-        value="45"
+        title="RAG Status History"
+        value="Improving"
         trend="up"
-        icon={<Clock className="h-4 w-4 text-muted-foreground" />}
-      />
-      <MetricCard
-        title="Consecutive Green"
-        value="15"
-        trend="up"
-        icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
-      />
-      <MetricCard
-        title="Team Members"
-        value="8"
-        trend="up"
-        icon={<Users className="h-4 w-4 text-muted-foreground" />}
-      />
-      <MetricCard
-        title="Completion"
-        value="75%"
-        trend="up"
-        icon={<Target className="h-4 w-4 text-muted-foreground" />}
-      />
+        icon={<Circle className="h-4 w-4 text-muted-foreground" />}
+      >
+        <RagColorHistory />
+      </MetricCard>
     </div>
   );
 };

@@ -61,24 +61,37 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <div className="container py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
+      <div className="max-w-[1800px] mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-8">
+          <div>
             <h1 className="text-3xl font-bold text-gray-900">Project Status Dashboard</h1>
             <p className="mt-2 text-gray-600">Track and monitor project health over time</p>
           </div>
           
           <MetricsOverview />
           
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">Status History</h2>
-              <p className="mt-1 text-sm text-gray-600">View and manage status reports</p>
+          <div className="grid grid-cols-1 xl:grid-cols-[2fr,1fr] gap-8">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">Status History</h2>
+                  <p className="mt-1 text-sm text-gray-600">View and manage status reports</p>
+                </div>
+                <AddReportButton onClick={() => setIsAddingReport(true)} />
+              </div>
+              <StatusTimeline statuses={statuses} />
             </div>
-            <AddReportButton onClick={() => setIsAddingReport(true)} />
+            
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">Project Details</h2>
+                <p className="mt-1 text-sm text-gray-600">Additional project information</p>
+              </div>
+              <div className="bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-gray-100">
+                <p className="text-sm text-gray-500">This section can be used for project details, team members, or other relevant information.</p>
+              </div>
+            </div>
           </div>
-          
-          <StatusTimeline statuses={statuses} />
           
           <AddReportForm
             open={isAddingReport}

@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingDown, TrendingUp, Minus, Clock, History, AlertCircle } from "lucide-react";
+import { TrendingDown, TrendingUp, Minus, Clock, History, AlertCircle, Users, Target } from "lucide-react";
 
 interface MetricCardProps {
   title: string;
@@ -40,7 +40,7 @@ const MetricCard = ({ title, value, trend, icon }: MetricCardProps) => {
 
 export const MetricsOverview = () => {
   return (
-    <div className="grid gap-4 md:grid-cols-4 mb-8">
+    <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
       <MetricCard
         title="Current Status"
         value="Green"
@@ -60,10 +60,22 @@ export const MetricsOverview = () => {
         icon={<Clock className="h-4 w-4 text-muted-foreground" />}
       />
       <MetricCard
-        title="Consecutive Green Days"
+        title="Consecutive Green"
         value="15"
         trend="up"
         icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
+      />
+      <MetricCard
+        title="Team Members"
+        value="8"
+        trend="up"
+        icon={<Users className="h-4 w-4 text-muted-foreground" />}
+      />
+      <MetricCard
+        title="Completion"
+        value="75%"
+        trend="up"
+        icon={<Target className="h-4 w-4 text-muted-foreground" />}
       />
     </div>
   );

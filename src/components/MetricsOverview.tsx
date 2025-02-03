@@ -1,13 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingDown, TrendingUp, Minus } from "lucide-react";
+import { TrendingDown, TrendingUp, Minus, Clock, History, AlertCircle } from "lucide-react";
 
 interface MetricCardProps {
   title: string;
   value: string;
   trend: "up" | "down" | "neutral";
+  icon?: React.ReactNode;
 }
 
-const MetricCard = ({ title, value, trend }: MetricCardProps) => {
+const MetricCard = ({ title, value, trend, icon }: MetricCardProps) => {
   const getTrendIcon = () => {
     switch (trend) {
       case "up":
@@ -23,9 +24,12 @@ const MetricCard = ({ title, value, trend }: MetricCardProps) => {
     <Card>
       <CardContent className="pt-6">
         <div className="flex justify-between items-start">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <h3 className="text-2xl font-bold mt-2">{value}</h3>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              {icon}
+              <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            </div>
+            <h3 className="text-2xl font-bold">{value}</h3>
           </div>
           {getTrendIcon()}
         </div>
@@ -36,21 +40,30 @@ const MetricCard = ({ title, value, trend }: MetricCardProps) => {
 
 export const MetricsOverview = () => {
   return (
-    <div className="grid gap-4 md:grid-cols-3 mb-8">
+    <div className="grid gap-4 md:grid-cols-4 mb-8">
       <MetricCard
         title="Current Status"
         value="Green"
         trend="up"
+        icon={<AlertCircle className="h-4 w-4 text-muted-foreground" />}
       />
       <MetricCard
         title="Last Week"
         value="Green"
         trend="neutral"
+        icon={<History className="h-4 w-4 text-muted-foreground" />}
       />
       <MetricCard
-        title="Issues Reported"
-        value="0"
-        trend="neutral"
+        title="Days Since Last Red"
+        value="45"
+        trend="up"
+        icon={<Clock className="h-4 w-4 text-muted-foreground" />}
+      />
+      <MetricCard
+        title="Consecutive Green Days"
+        value="15"
+        trend="up"
+        icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
       />
     </div>
   );

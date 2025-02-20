@@ -33,7 +33,7 @@ export const StatusCard = ({ date, status, reporter, comment }: StatusCardProps)
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <AlertCircle className="h-4 w-4" />
-            {format(new Date(date), "MMM d, yyyy 'at' h:mm a")}
+            {format(new Date(date), "MMM d, yyyy")}
           </div>
           <div className="flex items-center gap-2">
             <User className="h-4 w-4 text-gray-500" />
